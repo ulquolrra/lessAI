@@ -39,7 +39,8 @@ pub(super) fn parse_writeback_run_regions(
                     if hyperlink_start.is_some() {
                         return Err(DOCX_HYPERLINK_LOCK_FALLBACK_SIGNAL.to_string());
                     }
-                    let (child_events, next_index) = capture_subtree_events(events, index)?;
+                    let (child_events, next_index) =
+                        capture_subtree_events_from_slice(events, index)?;
                     flush_writeback_editable_region(
                         &mut regions,
                         &mut buffer,
@@ -67,7 +68,8 @@ pub(super) fn parse_writeback_run_regions(
                         if hyperlink_start.is_some() {
                             return Err(DOCX_HYPERLINK_LOCK_FALLBACK_SIGNAL.to_string());
                         }
-                        let (child_events, next_index) = capture_subtree_events(events, index)?;
+                        let (child_events, next_index) =
+                            capture_subtree_events_from_slice(events, index)?;
                         flush_writeback_editable_region(
                             &mut regions,
                             &mut buffer,
@@ -86,7 +88,8 @@ pub(super) fn parse_writeback_run_regions(
                         if hyperlink_start.is_some() {
                             return Err(DOCX_HYPERLINK_LOCK_FALLBACK_SIGNAL.to_string());
                         }
-                        let (child_events, next_index) = capture_subtree_events(events, index)?;
+                        let (child_events, next_index) =
+                            capture_subtree_events_from_slice(events, index)?;
                         flush_writeback_editable_region(
                             &mut regions,
                             &mut buffer,
@@ -615,4 +618,3 @@ pub(super) fn parse_writeback_formula_region(
 
     Ok(placeholders::raw_locked_region(&text, "formula", events))
 }
-
