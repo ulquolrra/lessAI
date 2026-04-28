@@ -190,10 +190,10 @@ export function rewriteUnitHasEditableSlot(
 }
 
 export function findRewriteUnit(
-  session: DocumentSession,
+  session: DocumentSession | null | undefined,
   rewriteUnitId: string | null | undefined
 ) {
-  if (!rewriteUnitId) return null;
+  if (!session || !rewriteUnitId) return null;
   return session.rewriteUnits.find((item) => item.id === rewriteUnitId) ?? null;
 }
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, type RefObject } from "react";
+import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
 
 import {
   buildSelectionDecorationRects,
@@ -37,10 +37,18 @@ export function useSelectionDecorationRects<T extends HTMLElement>({
   const [selectionDecorationRects, setSelectionDecorationRects] = useState<
     SelectionDecorationRect[]
   >([]);
+  const frameRef = useRef<number | null>(null);
+
+  const cancelScheduledSelectionStateSync = useCallback(() => {
+    if (frameRef.current == null) return;
+    cancelAnimationFrame(frameRef.current);
+    frameRef.current = null;
+  }, []);
 
   const clearSelectionDecoration = useCallback(() => {
+    cancelScheduledSelectionStateSync();
     setSelectionDecorationRects([]);
-  }, []);
+  }, [cancelScheduledSelectionStateSync]);
 
   const syncSelectionState = useCallback(() => {
     const root = rootRef.current;
@@ -53,13 +61,20 @@ export function useSelectionDecorationRects<T extends HTMLElement>({
   }, [resolveRange, rootRef]);
 
   const scheduleSelectionStateSync = useCallback(() => {
-    requestAnimationFrame(syncSelectionState);
-  }, [syncSelectionState]);
+    cancelScheduledSelectionStateSync();
+    frameRef.current = requestAnimationFrame(() => {
+      frameRef.current = null;
+      syncSelectionState();
+    });
+  }, [cancelScheduledSelectionStateSync, syncSelectionState]);
 
   useEffect(() => {
     document.addEventListener("selectionchange", syncSelectionState);
-    return () => document.removeEventListener("selectionchange", syncSelectionState);
-  }, [syncSelectionState]);
+    return () => {
+      document.removeEventListener("selectionchange", syncSelectionState);
+      cancelScheduledSelectionStateSync();
+    };
+  }, [cancelScheduledSelectionStateSync, syncSelectionState]);
 
   return {
     selectionDecorationRects,
