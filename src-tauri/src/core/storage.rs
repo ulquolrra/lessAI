@@ -203,9 +203,9 @@ mod tests {
         fs::write(
             &path,
             r#"{
-  "baseUrl": "https://api.openai.com/v1",
+  "baseUrl": "https://api.deepseek.com/v1",
   "apiKey": "",
-  "model": "gpt-4.1-mini",
+  "model": "deepseek-v4-flash",
   "updateProxy": "",
   "timeoutMs": 45000,
   "temperature": 0.8,
@@ -234,9 +234,9 @@ mod tests {
         fs::create_dir_all(&root).expect("create root");
         let path = root.join("settings.json");
         let original = r#"{
-  "baseUrl": "https://api.openai.com/v1",
+  "baseUrl": "https://api.deepseek.com/v1",
   "apiKey": "key",
-  "model": "gpt-4.1-mini",
+  "model": "deepseek-v4-flash",
   "timeoutMs": 45000,
   "temperature": 0.8,
   "rewriteMode": "manual"

@@ -224,9 +224,9 @@ mod tests {
 
     fn valid_settings() -> AppSettings {
         AppSettings {
-            base_url: "https://api.openai.com/v1".to_string(),
+            base_url: "https://api.deepseek.com/v1".to_string(),
             api_key: "test-key".to_string(),
-            model: "gpt-4.1-mini".to_string(),
+            model: "deepseek-v4-flash".to_string(),
             ..AppSettings::default()
         }
     }

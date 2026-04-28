@@ -47,9 +47,9 @@ export const TAURI_EVENTS = {
 } as const;
 
 export const DEFAULT_SETTINGS: AppSettings = {
-  baseUrl: "https://api.openai.com/v1",
+  baseUrl: "https://api.deepseek.com/v1",
   apiKey: "",
-  model: "gpt-4.1-mini",
+  model: "deepseek-v4-flash",
   updateProxy: "",
   timeoutMs: 45_000,
   temperature: 0.8,

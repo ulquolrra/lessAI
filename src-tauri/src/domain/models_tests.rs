@@ -32,9 +32,9 @@ fn accepts_current_segmentation_preset_values() {
 #[test]
 fn fills_missing_app_settings_fields_from_defaults() {
     let base = serde_json::json!({
-        "baseUrl": "https://api.openai.com/v1",
+        "baseUrl": "https://api.deepseek.com/v1",
         "apiKey": "",
-        "model": "gpt-4.1-mini",
+        "model": "deepseek-v4-flash",
         "updateProxy": "",
         "timeoutMs": 45000,
         "temperature": 0.8,
